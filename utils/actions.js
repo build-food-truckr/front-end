@@ -8,7 +8,7 @@ export function fetchUserLocation() {
 }
 
 // // fetch venues by lat & lng 
-export function fetchFoodTrucksByLatLng(location){
+export function fetchVenuesByLatLng(location){
     console.log({
         secret: process.env.secret,
         id: process.env.id,
@@ -17,7 +17,7 @@ export function fetchFoodTrucksByLatLng(location){
     const ID = process.env.id;
     const SECRET = process.env.secret;
 
-    const foodTruck = "foodtruck";
+    const truck = "foodtruck";
     // const karaokeBox = "5744ccdfe4b0c0459246b4bb"; 
-    return axios.get(`https://api.foursquare.com/v2/venues/search?client_id=${ID}&client_secret=${SECRET}&v=20180323&limit=20&near=${location}&categoryId=${foodTruck}&&radius=10000`)
+    return axios.get(`https://api.foursquare.com/v2/venues/search?client_id=${ID}&client_secret=${SECRET}&v=20180323&limit=20&near=${location}&query=${truck}&&radius=10000`)
 }

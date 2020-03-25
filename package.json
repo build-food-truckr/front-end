@@ -1,5 +1,5 @@
 {
-  "name": "food-truckr",
+  "name": "karaoke-findr",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "next": "9.3.1",
-    "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react": "16.13.0",
+    "react-dom": "16.13.0"
   }
 }
