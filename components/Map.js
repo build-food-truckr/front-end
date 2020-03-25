@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactMapGL, {Marker} from 'react-map-gl';
 
-export default function Map({lat, lng, isLoading}) {
+export default function Map({lat, lng, isLoading, trucks}) {
 
 
   const [viewport, setViewport] = useState({
@@ -14,6 +14,7 @@ export default function Map({lat, lng, isLoading}) {
 
   useEffect(()=>{
     console.log("viewport updated",viewport)
+    console.log(trucks)
     // state.details.location && setVenueLocation(state.details.location)
   },[viewport])
 
@@ -38,6 +39,7 @@ export default function Map({lat, lng, isLoading}) {
               longitude: lng,
               zoom: 11.666
             })}>
+
          <Marker latitude={lat}
                   longitude={lng}
          >

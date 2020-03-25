@@ -8,16 +8,16 @@ export default function Search(props) {
 
     const [isLoading, setIsLoading] = useState(false)
     const [userLocation, setUserLocation] = useState('')
-    const [lat, setLat] = useState(33)
-    const [lng, setLng] = useState(0.9)
+    const [lat, setLat] = useState(0.9)
+    const [lng, setLng] = useState(33)
     const [trucks, setTrucks] = useState([])
 
 
     function createLatLng(location){
       let locationArr = location.split(",")
       console.log(locationArr)
-      // setLat(locationArr[0])
-      // setLng(locationArr[1])
+      setLat(Number(locationArr[0]))
+      setLng(Number(locationArr[1]))
       setIsLoading(false)
       return locationArr
     }
@@ -76,7 +76,8 @@ export default function Search(props) {
 
             <div className="map-container">
             {lng && 
-                <Map isLoading={isLoading} lat={lat} lng={lng}
+                <Map isLoading={isLoading} trucks={trucks}
+                lat={lat} lng={lng}
                   // icon={props.history.location.state.icon}
                 />
             }    
