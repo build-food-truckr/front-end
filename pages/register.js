@@ -34,7 +34,8 @@ function Register (props) {
           {loginForm?<>Sign in to</>:<>Join</>} <a href="#">Food Truckr</a>
         </h1>
         <p></p>
-        <button onClick={()=>setLoginForm(!loginForm)}>{loginForm?<>Register</>:<>Login</>}</button>
+        <button className="btn" onClick={()=>setLoginForm(!loginForm)}>{loginForm?<>Not a member yet? Join us here</>:<>Already a member? Login here</>}</button>
+        <p></p>
         {loginForm?<LoginForm loginFunction={processLoginFunction} />:<UserForm isEditing={false} addUserFunction={addUserFunction} />}
       </main>
       <footer>
@@ -172,6 +173,44 @@ function Register (props) {
             flex-direction: column;
           }
         }
+
+        /* General button style (reset) */
+        .btn {
+          border: 1px solid #0070f3;
+          color: #fff;
+          font-family: inherit;
+          font-size: inherit;
+          background: #0070f3;
+          cursor: pointer;
+          padding: 15px 40px;
+          display: inline-block;
+          margin: 15px 30px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          font-weight: 700;
+          outline: none;
+          position: relative;
+          -webkit-transition: all 0.3s;
+          -moz-transition: all 0.3s;
+          transition: all 0.3s;
+        }
+
+        .btn:hover,
+        .btn:active {
+          color: #0070f3;
+          background: #fff;
+        }
+
+        .btn:disabled {
+          background: darkgrey;
+          border: 1px dotted darkgrey;
+          color: lightgrey;
+        }
+
+        .btn-s {
+          padding: 10px 30px;
+        }
+
       `}</style>
 
       <style jsx global>{`

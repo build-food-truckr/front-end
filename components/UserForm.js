@@ -36,7 +36,7 @@ function UserForm(props) {
         <label htmlFor="tos" className="check">Do you agree to the Terms of Service? </label><Field type="checkbox" name="tos" /><br />
         {props.errors.tos?<p className="error">{props.errors.tos}</p>:<></>}
         <Field type="hidden" name="id" />
-        <button disabled={!props.isValid}>Submit</button>
+        <button className="btn btn-s" disabled={!props.isValid}>Submit</button>
         <style jsx>{`
           label {
             margin: 10px 0px;
@@ -58,6 +58,43 @@ function UserForm(props) {
             color: red;
             font-size: 0.6rem;
             margin: 0;
+          }
+
+          /* General button style (reset) */
+          .btn {
+            border: 1px solid #0070f3;
+          	color: #fff;
+          	font-family: inherit;
+          	font-size: inherit;
+          	background: #0070f3;
+          	cursor: pointer;
+          	padding: 15px 40px;
+          	display: inline-block;
+          	margin: 15px 30px;
+          	text-transform: uppercase;
+          	letter-spacing: 1px;
+          	font-weight: 700;
+          	outline: none;
+          	position: relative;
+          	-webkit-transition: all 0.3s;
+          	-moz-transition: all 0.3s;
+          	transition: all 0.3s;
+          }
+
+          .btn:hover,
+          .btn:active {
+          	color: #0070f3;
+          	background: #fff;
+          }
+
+          .btn:disabled {
+            background: darkgrey;
+            border: 1px dotted darkgrey;
+            color: lightgrey;
+          }
+
+          .btn-s {
+            padding: 10px 30px;
           }
           `}</style>
       </div>
