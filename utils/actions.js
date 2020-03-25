@@ -17,7 +17,7 @@ export function fetchFoodTrucksByLatLng(location){
     const ID = process.env.id;
     const SECRET = process.env.secret;
 
-    const foodTruck = "4bf58dd8d48988d120941735";
+    const foodTruck = "foodtruck";
     // const karaokeBox = "5744ccdfe4b0c0459246b4bb"; 
     return axios.get(`https://api.foursquare.com/v2/venues/search?client_id=${ID}&client_secret=${SECRET}&v=20180323&limit=20&near=${location}&categoryId=${foodTruck}&&radius=10000`)
 }
