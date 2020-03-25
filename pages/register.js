@@ -1,9 +1,25 @@
+import React, {useState} from 'react';
 import Head from 'next/head'
+import bcrypt from 'bcryptjs';
 import UserForm from '../components/UserForm.js';
+import LoginForm from '../components/LoginForm.js';
+
 
 function Register (props) {
+  const [loginForm, setLoginForm] = useState(true);
+
   const addUserFunction = (userToAdd) => {
     console.log(`Add User: ${userToAdd.email} --> need hook`);
+  };
+
+  const processLoginFunction = (userDetails) => {
+    // Load hash from your password DB.
+    let hash = '$2a$10$jGONMK1/ZWyzILpEgumLHutAQ9nhyHORWQ73Mmb9Hq.VaXEHsgngi';
+    if (bcrypt.compareSync(userDetails.password, hash)) {
+      console.log(`Logged in: ${userDetails.username}`);
+    } else {
+      console.log('Login failed.')
+    }
   };
 
   return (
@@ -14,7 +30,8 @@ function Register (props) {
       </Head>
 
       <main>
-        <UserForm isEditing={false} addUserFunction={addUserFunction} />
+        <button onClick={()=>setLoginForm(!loginForm)}>{loginForm?<>Register</>:<>Login</>}</button>
+        {loginForm?<LoginForm loginFunction={processLoginFunction} />:<UserForm isEditing={false} addUserFunction={addUserFunction} />}
       </main>
       <footer>
         <a

@@ -21,8 +21,8 @@ const Home = () => (
         </a>
 
         <a href="/register" className="card">
-          <h3>Register &rarr;</h3>
-          <p>Register and start tracking your favorite Food Trucks</p>
+          <h3>Login/Register &rarr;</h3>
+          <p>Login and start tracking your favorite Food Trucks</p>
         </a>
 
         <div className="card">
