@@ -12,6 +12,7 @@ export function fetchVenuesByLatLng(location){
     console.log({
         secret: process.env.secret,
         id: process.env.id,
+        key: process.env.key
       })
 
     const ID = process.env.id;

@@ -2,15 +2,28 @@ import React, {useEffect, useState} from 'react'
 import {fetchUserLocation} from '../utils/actions'
 import {fetchVenuesByLatLng} from '../utils/actions'
 import TruckList from "../components/TruckList"
+import Map from "../components/Map"
 
 export default function Search(props) {
 
     const [isLoading, setIsLoading] = useState(false)
     const [userLocation, setUserLocation] = useState('')
+    const [lat, setLat] = useState(33)
+    const [lng, setLng] = useState(0.9)
     const [trucks, setTrucks] = useState([])
 
 
+    function createLatLng(location){
+      let locationArr = location.split(",")
+      console.log(locationArr)
+      // setLat(locationArr[0])
+      // setLng(locationArr[1])
+      setIsLoading(false)
+      return locationArr
+    }
+
     useEffect(() => {
+      setIsLoading(true)
         // kick off our asyncronous action creator
         fetchUserLocation()
         .then(function (res) {
@@ -35,6 +48,7 @@ export default function Search(props) {
         //   .catch(function() {
         //     // Code for handling errors
         //   });
+        createLatLng(userLocation)
     },[userLocation])
 
 
@@ -59,6 +73,14 @@ export default function Search(props) {
             <TruckList
                 trucks={trucks}
             />
+
+            <div className="map-container">
+            {lng && 
+                <Map isLoading={isLoading} lat={lat} lng={lng}
+                  // icon={props.history.location.state.icon}
+                />
+            }    
+            </div>
             <style jsx>{`
       .container {
         min-height: 100vh;
