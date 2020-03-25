@@ -30,6 +30,10 @@ function Register (props) {
       </Head>
 
       <main>
+        <h1 className="title">
+          {loginForm?<>Sign in to</>:<>Join</>} <a href="#">Food Truckr</a>
+        </h1>
+        <p></p>
         <button onClick={()=>setLoginForm(!loginForm)}>{loginForm?<>Register</>:<>Login</>}</button>
         {loginForm?<LoginForm loginFunction={processLoginFunction} />:<UserForm isEditing={false} addUserFunction={addUserFunction} />}
       </main>
