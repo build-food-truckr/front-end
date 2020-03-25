@@ -75,7 +75,7 @@ export default function Search(props) {
             />
 
             <div className="map-container">
-            {lng && 
+            {lng && trucks.length !== 0 &&
                 <Map isLoading={isLoading} trucks={trucks}
                 lat={lat} lng={lng}
                   // icon={props.history.location.state.icon}

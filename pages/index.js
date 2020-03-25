@@ -177,6 +177,9 @@ const Home = () => (
       * {
         box-sizing: border-box;
       }
+      img #foodTruckIcon{
+        width: 20px;
+      }
     `}</style>
   </div>
 )

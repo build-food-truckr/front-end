@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactMapGL, {Marker} from 'react-map-gl';
+import foodtruck from './food-truck.png';
+import mapMarker from './map-marker.png';
 
 export default function Map({lat, lng, isLoading, trucks}) {
 
@@ -14,7 +16,7 @@ export default function Map({lat, lng, isLoading, trucks}) {
 
   useEffect(()=>{
     console.log("viewport updated",viewport)
-    console.log(trucks)
+    console.log("trucks", trucks)
     // state.details.location && setVenueLocation(state.details.location)
   },[viewport])
 
@@ -23,11 +25,11 @@ export default function Map({lat, lng, isLoading, trucks}) {
   return (
 
     <div className="map">
-      {isLoading ? (<p>...loading map</p>) :
+      {/* {isLoading ? (<p>...loading map</p>) : */}
       
       
 
-      (<ReactMapGL
+      <ReactMapGL
         mapboxApiAccessToken={KEY}
         {...viewport}
         mapStyle="mapbox://styles/bobbidigi/ck7jfv8s83bvh1ipswl1hv564"
@@ -37,17 +39,19 @@ export default function Map({lat, lng, isLoading, trucks}) {
               marginBottom: '15rem',
               latitude: lat,
               longitude: lng,
-              zoom: 11.666
+              zoom: 9.666
             })}>
 
-         <Marker latitude={lat}
-                  longitude={lng}
-         >
-           {/* <div>
-             <img className="marker-icon" src={icon}/>
-           </div> */}
-         </Marker>
-      </ReactMapGL>)}
+
+         {trucks.map((truck) => {
+             return <Marker latitude={truck.location.lat} longitude={truck.location.lng}>
+                 <div>
+                    <img src={mapMarker}/>
+                 </div>
+                 </Marker>
+         })}
+         
+      </ReactMapGL>
     </div>
   );
 }
