@@ -28,7 +28,7 @@ export default function Search(props) {
         fetchUserLocation()
         .then(function (res) {
             console.log("location response",res.data.loc);
-            // dispatch LOCATION_SUCCESS 
+            // dispatch LOCATION_SUCCESS
             setUserLocation(res.data.loc)
         })
         .catch(function (error) {
@@ -36,15 +36,16 @@ export default function Search(props) {
             console.log(error.response);
         })
     }, []);
-    
+
 
     useEffect(()=>{
         // //fetch venues by initial user location
         fetchVenuesByLatLng(userLocation)
         .then(function(res){
+            console.log(res);
             console.log(res.data.response.venues)
             setTrucks(res.data.response.venues);
-        })
+        }).catch(err=>console.log(err))
         //   .catch(function() {
         //     // Code for handling errors
         //   });
@@ -55,7 +56,7 @@ export default function Search(props) {
     // useEffect(()=>{
     //     dispatch(fetchVenues(state.location, state.categoryID))
     // },[state.location])
-    
+
     // useEffect(()=>{
     //     dispatch(fetchVenues(state.location, state.categoryID))
     // },[state.categoryID])
@@ -65,7 +66,7 @@ export default function Search(props) {
         <div>
             search
             {/* <Form
-            userLocation={state.userLocation} 
+            userLocation={state.userLocation}
             categoryID={state.categoryID}
             />
              */}
@@ -80,7 +81,7 @@ export default function Search(props) {
                 lat={lat} lng={lng}
                   // icon={props.history.location.state.icon}
                 />
-            }    
+            }
             </div>
             <style jsx>{`
       .container {
