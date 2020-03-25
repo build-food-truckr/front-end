@@ -1,14 +1,17 @@
 import React, {useEffect} from 'react';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import bcrypt from 'bcryptjs';
+
+const roles = ['User','Operator'];
+const minPasswordLength = 8;
 
 function UserForm(props) {
-  const roles = ['User','Operator'];
 
   useEffect(()=>{
     if (props.isEditing) {
       console.log(props);
-      props.setFieldValue('uname',props.uname);
+      props.setFieldValue('username',props.username);
       props.setFieldValue('email',props.email);
       props.setFieldValue('password',props.password);
       props.setFieldValue('tos',props.tos);
@@ -19,8 +22,8 @@ function UserForm(props) {
   return (
     <Form>
       <div>
-        <label htmlFor="uname">Name</label><Field type="text" name="uname" placeholder="Name" /><br />
-        {props.touched.uname && props.errors.uname?<p className="error">{props.errors.uname}</p>:<></>}
+        <label htmlFor="username">Username</label><Field type="text" name="username" placeholder="Username" /><br />
+        {props.touched.username && props.errors.username?<p className="error">{props.errors.username}</p>:<></>}
         <label htmlFor="email">Email</label><Field type="email" name="email" placeholder="Email" /><br />
         {props.touched.email && props.errors.email?<p className="error">{props.errors.email}</p>:<></>}
         <label htmlFor="password">Password</label><Field type="password" name="password" placeholder="Password" /><br />
@@ -66,27 +69,26 @@ function UserForm(props) {
 const FormikUserForm = withFormik({
   mapPropsToValues(props) {
     return {
-      uname: props.uname || "",
+      username: props.username || "",
       email: props.email || "",
       role: props.role || '',
-      password: props.password || "",
+      password: "",
       tos: props.tos || false,
-      id: props.id || (props.currentId+1)
+      id: props.id || undefined
     };
   },
-  //id still gives same id... will need to find another way if going to edit
 
   //======VALIDATION SCHEMA==========
   validationSchema: Yup.object().shape({
-    uname: Yup.string()
+    username: Yup.string()
       .required("Please include the username"),
     email: Yup.string()
       .email("Must be a valid email address")
       .required("Please enter the user's email"),
     role: Yup.string()
-      .oneOf(['User','Operator'], 'Please select a role'),
+      .oneOf(roles, 'Please select a role'),
     password: Yup.string()
-      .min(8, "Password must be at least 8 characters long")
+      .min(minPasswordLength, `Password must be at least ${minPasswordLength} characters long`)
       .required("Password is required"),
     tos: Yup.boolean()
       .required('Must Accept Terms and Conditions')
@@ -95,16 +97,18 @@ const FormikUserForm = withFormik({
   //======END VALIDATION SCHEMA==========
 
   handleSubmit(values, formikBag) {
+    const hash = bcrypt.hashSync(values.password, 10);
+    values.password = hash;
     console.log(values);
-    const userToSave = {...values, id: formikBag.props.currentId};
-    formikBag.props.addFunction(userToSave);
+    let userToSave = values;
+    // I don't think I need this: (MST)
+    //if (formikBag.props.isEditing) {
+    //  userToSave = {...values, id: formikBag.props.id};
+    //}
+    formikBag.props.addUserFunction(userToSave);
 
     formikBag.setStatus("Form Submitting!");
     formikBag.resetForm();
-
-
-
-    //THIS IS WHERE YOU DO YOUR FORM SUBMISSION CODE... HTTP REQUESTS, ETC.
   }
 })(UserForm);
 
