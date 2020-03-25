@@ -1,0 +1,9 @@
+{
+    "build": {
+      "env": {
+        "secret": "@secret",
+        "id": "@id",
+        "key": "@key"
+      }
+    }
+}
