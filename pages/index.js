@@ -13,9 +13,12 @@ function Home (props) {
       <Head>
         <title>Food Truckr</title>
         <link rel="icon" href="/favicon.ico" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
       </Head>
 
+
       <main>
+      <img src="/foodtruck_graphic.png" alt="Food Truckr" />
         <h1 className="title">
           Welcome to <a href="#">Food Truckr</a>
         </h1>
