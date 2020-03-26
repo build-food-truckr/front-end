@@ -74,10 +74,12 @@ function Login (props) {
         footer {
           width: 100%;
           height: 100px;
-          border-top: 1px solid #eaeaea;
+          border-top: 1px dotted #504E50;
           display: flex;
           justify-content: center;
           align-items: center;
+          font-family: Roboto;
+          color: #504E50;
         }
 
         footer img {
@@ -95,6 +97,14 @@ function Login (props) {
           text-decoration: none;
         }
 
+        .title {
+          margin: 0;
+          line-height: 1.15;
+          font-size: 4rem;
+          font-family: Roboto;
+          color: #504E50;
+        }
+
         .title a {
           color: #EF903C;
           text-decoration: none;
@@ -104,12 +114,6 @@ function Login (props) {
         .title a:focus,
         .title a:active {
           text-decoration: underline;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
         }
 
         .title,

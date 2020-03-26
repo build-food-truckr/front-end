@@ -19,11 +19,14 @@ function LoginForm(props) {
 
           label {
             font-family: Roboto;
+            color: #504E50;
             margin: 10px 0px;
           }
 
           label:after {
             content: ': ';
+            font-family: Roboto;
+            color: #504E50;
           }
 
           .check:after {
