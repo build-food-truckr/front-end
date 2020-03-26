@@ -63,6 +63,7 @@ function Home (props) {
         }
 
         main {
+          font-family: Roboto;
           padding: 5rem 0;
           flex: 1;
           display: flex;
@@ -74,10 +75,12 @@ function Home (props) {
         footer {
           width: 100%;
           height: 100px;
-          border-top: 1px solid #eaeaea;
+          border-top: 1px dotted #504E50;
           display: flex;
           justify-content: center;
           align-items: center;
+          font-family: Roboto;
+          color: #504E50;
         }
 
         footer img {
@@ -95,8 +98,16 @@ function Home (props) {
           text-decoration: none;
         }
 
+        .title {
+          margin: 0;
+          line-height: 1.15;
+          font-size: 4rem;
+          font-family: Roboto;
+          color: #504E50;
+        }
+
         .title a {
-          color: #0070f3;
+          color: #EF903C;
           text-decoration: none;
         }
 
@@ -104,12 +115,6 @@ function Home (props) {
         .title a:focus,
         .title a:active {
           text-decoration: underline;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
         }
 
         .title,
@@ -142,11 +147,12 @@ function Home (props) {
         }
 
         .card {
+          font-family: Roboto;
           margin: 1rem;
           flex-basis: 45%;
           padding: 1.5rem;
           text-align: left;
-          color: inherit;
+          color: #504E50;
           text-decoration: none;
           border: 1px solid #eaeaea;
           border-radius: 10px;
@@ -156,8 +162,8 @@ function Home (props) {
         .card:hover,
         .card:focus,
         .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
+          color: #EF903C;
+          border-color: #EF903C;
         }
 
         .card h3 {
