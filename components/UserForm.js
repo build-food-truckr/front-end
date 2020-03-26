@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import bcrypt from 'bcryptjs';
 
 const roles = ['diner','operator'];
 const minPasswordLength = 8;
@@ -131,15 +130,8 @@ const FormikUserForm = withFormik({
   //======END VALIDATION SCHEMA==========
 
   handleSubmit(values, formikBag) {
-    const hash = bcrypt.hashSync(values.password, 10);
-    values.password = hash;
     console.log(values);
-    let userToSave = values;
-    // I don't think I need this: (MST)
-    //if (formikBag.props.isEditing) {
-    //  userToSave = {...values, id: formikBag.props.id};
-    //}
-    formikBag.props.addUserFunction(userToSave);
+    formikBag.props.addUserFunction(values);
 
     formikBag.setStatus("Form Submitting!");
     formikBag.resetForm();
