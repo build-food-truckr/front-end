@@ -63,7 +63,7 @@ export default function Search(props) {
 
 //fix routes
     return (
-        <div>
+        <div >
             search
             {/* <Form
             userLocation={state.userLocation}
