@@ -5,7 +5,7 @@ import UserForm from '../components/UserForm.js';
 import LoginForm from '../components/LoginForm.js';
 
 
-function Register (props) {
+function Login (props) {
   const [loginForm, setLoginForm] = useState(true);
 
   const addUserFunction = (userToAdd) => {
@@ -198,4 +198,4 @@ function Register (props) {
   );
 }
 
-export default Register;
+export default Login;

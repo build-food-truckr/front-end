@@ -20,7 +20,7 @@ const Home = () => (
           <p>Get started by searching our Food Trucks near you</p>
         </a>
 
-        <a href="/register" className="card">
+        <a href="/login" className="card">
           <h3>Login/Register &rarr;</h3>
           <p>Login and start tracking your favorite Food Trucks</p>
         </a>
