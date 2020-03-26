@@ -3,7 +3,7 @@ import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import bcrypt from 'bcryptjs';
 
-const roles = ['User','Operator'];
+const roles = ['Foodie','Food Truck Operator'];
 const minPasswordLength = 8;
 
 function UserForm(props) {
