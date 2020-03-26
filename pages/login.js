@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react';
 import Router from 'next/router';
 import dynamic from "next/dynamic";
 const HomePage = dynamic(() => import("./index"));
-import Head from 'next/head'
+import Head from 'next/head';
 import bcrypt from 'bcryptjs';
+import cookies from 'next-cookies';
 import UserForm from '../components/UserForm.js';
 import LoginForm from '../components/LoginForm.js';
 
@@ -27,6 +28,8 @@ function Login (props) {
     let hash = '$2a$10$jGONMK1/ZWyzILpEgumLHutAQ9nhyHORWQ73Mmb9Hq.VaXEHsgngi';
     if (bcrypt.compareSync(userDetails.password, hash)) {
       console.log(`Logged in: ${userDetails.username}`);
+      document.cookie = `username=${userDetails.username}; path=/`;
+      document.cookie = `loggedIn=true; path=/`;
       setLoggedIn(true);
     } else {
       console.log('Login failed.')
