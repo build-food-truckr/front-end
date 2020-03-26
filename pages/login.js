@@ -12,6 +12,7 @@ import LoginForm from '../components/LoginForm.js';
 function Login (props) {
   const [loginForm, setLoginForm] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
 
   useEffect(()=>{
     if (loggedIn) {
@@ -30,6 +31,7 @@ function Login (props) {
       console.log(`Logged in: ${userDetails.username}`);
       document.cookie = `username=${userDetails.username}; path=/`;
       document.cookie = `loggedIn=true; path=/`;
+      setUsername(userDetails.username);
       setLoggedIn(true);
     } else {
       console.log('Login failed.')
@@ -37,7 +39,7 @@ function Login (props) {
   };
 
   if (loggedIn) {
-    return <HomePage />
+    return <HomePage loggedIn={loggedIn} username={username} />
   }
 
   return (
