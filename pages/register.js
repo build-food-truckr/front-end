@@ -34,7 +34,7 @@ function Register (props) {
       <main>
         <img src="/foodtruck_graphic.png" alt="Food Truckr" />
         <h1 className="title">
-          {loginForm?<>Sign in to</>:<>Join</>} <a href="#">Food Truckr</a>
+          {loginForm?<>Sign in to</>:<>Join</>} <a href="/">Food Truckr</a>
         </h1>
         <p></p>
         <button className="btn" onClick={()=>setLoginForm(!loginForm)}>{loginForm?<>Not a member yet? Join us here</>:<>Already a member? Login here</>}</button>
