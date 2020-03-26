@@ -1,4 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import Router from 'next/router';
+import dynamic from "next/dynamic";
+const HomePage = dynamic(() => import("./index"));
 import Head from 'next/head'
 import bcrypt from 'bcryptjs';
 import UserForm from '../components/UserForm.js';
@@ -7,6 +10,13 @@ import LoginForm from '../components/LoginForm.js';
 
 function Login (props) {
   const [loginForm, setLoginForm] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(()=>{
+    if (loggedIn) {
+      Router.replace("/login", "/", { shallow: true });
+    }
+  },[loggedIn]);
 
   const addUserFunction = (userToAdd) => {
     console.log(`Add User: ${userToAdd.email} --> need hook`);
@@ -17,10 +27,15 @@ function Login (props) {
     let hash = '$2a$10$jGONMK1/ZWyzILpEgumLHutAQ9nhyHORWQ73Mmb9Hq.VaXEHsgngi';
     if (bcrypt.compareSync(userDetails.password, hash)) {
       console.log(`Logged in: ${userDetails.username}`);
+      setLoggedIn(true);
     } else {
       console.log('Login failed.')
     }
   };
+
+  if (loggedIn) {
+    return <HomePage />
+  }
 
   return (
     <div className="container">
