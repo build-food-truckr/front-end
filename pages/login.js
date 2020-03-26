@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import Router from 'next/router';
 import dynamic from "next/dynamic";
 const HomePage = dynamic(() => import("./index"));
@@ -8,11 +9,15 @@ import cookies from 'next-cookies';
 import UserForm from '../components/UserForm.js';
 import LoginForm from '../components/LoginForm.js';
 
+const apiBaseURL = 'http://localhost:5000/api';
+const apiRegister = `${apiBaseURL}/auth/register`;
+const apiLogin = `${apiBaseURL}/auth/login`;
 
 function Login (props) {
   const [loginForm, setLoginForm] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
+  const [token, setToken] = useState({});
 
   useEffect(()=>{
     if (loggedIn) {
@@ -21,25 +26,26 @@ function Login (props) {
   },[loggedIn]);
 
   const addUserFunction = (userToAdd) => {
-    console.log(`Add User: ${userToAdd.email} --> need hook`);
+    axios.post(apiRegister, {...userToAdd})
+      .then(response=>{
+        console.log(response);
+      })
+      .catch(err=>console.log(err));
   };
 
   const processLoginFunction = (userDetails) => {
-    // Load hash from your password DB.
-    let hash = '$2a$10$jGONMK1/ZWyzILpEgumLHutAQ9nhyHORWQ73Mmb9Hq.VaXEHsgngi';
-    if (bcrypt.compareSync(userDetails.password, hash)) {
-      console.log(`Logged in: ${userDetails.username}`);
-      document.cookie = `username=${userDetails.username}; path=/`;
-      document.cookie = `loggedIn=true; path=/`;
-      setUsername(userDetails.username);
-      setLoggedIn(true);
-    } else {
-      console.log('Login failed.')
-    }
+    axios.post(apiLogin, { username: userDetails.username, password: userDetails.password})
+      .then(response=>{
+        console.log(response);
+        setUsername(userDetails.username);
+        setToken(response);
+        setLoggedIn(true);
+      })
+      .catch(err=>console.log(err));
   };
 
   if (loggedIn) {
-    return <HomePage loggedIn={loggedIn} username={username} />
+    return <HomePage loggedIn={loggedIn} username={username} token={token} />
   }
 
   return (

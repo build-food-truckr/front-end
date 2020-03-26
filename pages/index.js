@@ -209,10 +209,11 @@ function Home (props) {
 }
 
 Home.getInitialProps = async function(ctx) {
-    console.log(cookies(ctx));
+  const { token } = cookies(ctx);
+  console.log(`token: ${token}`);
     return {
-      username: cookies(ctx).username || '',
-      loggedIn: cookies(ctx).loggedIn || false
+      username: token.username || '',
+      token: token
     }
   }
 
