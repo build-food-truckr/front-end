@@ -9,7 +9,8 @@ import cookies from 'next-cookies';
 import UserForm from '../components/UserForm.js';
 import LoginForm from '../components/LoginForm.js';
 
-const apiBaseURL = 'http://localhost:5000/api';
+const apiProtocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
+const apiBaseURL = `${apiProtocol}://localhost:5000/api`;
 const apiRegister = `${apiBaseURL}/auth/register`;
 const apiLogin = `${apiBaseURL}/auth/login`;
 
@@ -18,6 +19,7 @@ function Login (props) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const [token, setToken] = useState({});
+  const [userId, setUserId] = useState(undefined);
 
   useEffect(()=>{
     if (loggedIn) {
@@ -36,16 +38,21 @@ function Login (props) {
   const processLoginFunction = (userDetails) => {
     axios.post(apiLogin, { username: userDetails.username, password: userDetails.password})
       .then(response=>{
-        console.log(response);
-        setUsername(userDetails.username);
-        setToken(response);
+        //console.log('login.processLoginFunction:Response.data:',response.data);
+        document.cookie = `isLoggedIn=true; path=/`;
+        document.cookie = `authToken=${response.data.authToken}; path=/`;
+        document.cookie = `username=${response.data.username}; path=/`;
+        document.cookie = `userId=${response.data.userId}; path=/`;
+        setUsername(`${response.data.username}`);
+        setToken(response.data.authToken);
+        setUserId(response.data.userId);
         setLoggedIn(true);
       })
       .catch(err=>console.log(err));
   };
 
   if (loggedIn) {
-    return <HomePage loggedIn={loggedIn} username={username} token={token} />
+    return <HomePage loggedIn={loggedIn} username={username} token={token} userId={userId} />
   }
 
   return (

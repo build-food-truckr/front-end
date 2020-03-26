@@ -6,7 +6,7 @@ function Home (props) {
   const [username, setUsername] = useState(props.username);
   const [isLoggedIn, setIsLoggedIn] = useState(props.loggedIn);
 
-  console.log(props);
+  console.log('Home.props:',props);
 
   return (
     <div className="container">
@@ -209,11 +209,12 @@ function Home (props) {
 }
 
 Home.getInitialProps = async function(ctx) {
-  const { token } = cookies(ctx);
-  console.log(`token: ${token}`);
+  const { isLoggedIn, authToken, username } = cookies(ctx);
+  console.log(`Home.getInitialProps:token: ${authToken}`);
     return {
-      username: token.username || '',
-      token: token
+      loggedIn: isLoggedIn || false,
+      username: username || '',
+      token: authToken || undefined
     }
   }
 
