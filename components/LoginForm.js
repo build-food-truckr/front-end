@@ -18,6 +18,7 @@ function LoginForm(props) {
         <style jsx>{`
 
           label {
+            font-family: Roboto;
             margin: 10px 0px;
           }
 
@@ -41,29 +42,29 @@ function LoginForm(props) {
 
           /* General button style (reset) */
           .btn {
-            border: 1px solid #0070f3;
-          	color: #fff;
-          	font-family: inherit;
-          	font-size: inherit;
-          	background: #0070f3;
-          	cursor: pointer;
-          	padding: 15px 40px;
-          	display: inline-block;
-          	margin: 15px 30px;
-          	text-transform: uppercase;
-          	letter-spacing: 1px;
-          	font-weight: 700;
-          	outline: none;
-          	position: relative;
-          	-webkit-transition: all 0.3s;
-          	-moz-transition: all 0.3s;
-          	transition: all 0.3s;
+            border: 1px solid #EF903C;
+            color: #fff;
+            font-family: Roboto;
+            font-size: inherit;
+            background: #EF903C;
+            cursor: pointer;
+            padding: 15px 40px;
+            display: inline-block;
+            margin: 15px 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            outline: none;
+            position: relative;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            transition: all 0.3s;
           }
 
           .btn:hover,
           .btn:active {
-          	color: #0070f3;
-          	background: #fff;
+            color: #EF903C;
+            background: #fff;
           }
 
           .btn:disabled {
