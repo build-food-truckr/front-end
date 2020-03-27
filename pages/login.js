@@ -44,12 +44,11 @@ function Login (props) {
       .then((response, request)=>{
         console.log('login.processLoginFunction:Response.headers',response.headers);
         document.cookie = `isLoggedIn=true; path=/`;
-        document.cookie = `authToken=${response.data.authToken}; path=/`;
-        document.cookie = `username=${response.data.username}; path=/`;
-        document.cookie = `userId=${response.data.userId}; path=/`;
-        setUsername(`${response.data.username}`);
-        setToken(response.data.authToken);
-        setUserId(response.data.userId);
+        document.cookie = `authToken=${response.cookies.authToken}; path=/`;
+        document.cookie = `username=${userDetails.username}; path=/`;
+        setUsername(`${userDetails.username}`);
+        setToken(response.cookies.authToken);
+        //setUserId(response.cookies.authToken.payload.id);
         setLoggedIn(true);
       })
       .catch(function (error) {
