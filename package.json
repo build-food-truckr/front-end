@@ -6,10 +6,12 @@
     "node": "12.16.x"
   },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start -p $PORT",
+  "heroku-postbuild": "npm run build",
+  "test": "echo \"Error: no test specified\" && exit 1"
+},
   "dependencies": {
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
