@@ -9,8 +9,9 @@ import cookies from 'next-cookies';
 import UserForm from '../components/UserForm.js';
 import LoginForm from '../components/LoginForm.js';
 
-const apiProtocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
-const apiBaseURL = `${apiProtocol}://localhost:5000/api`;
+//const apiBaseURL = `https://cors-anywhere.herokuapp.com/https://authentication-backend-lambda.herokuapp.com/api`;
+const apiBaseURL = `https://authentication-backend-lambda.herokuapp.com/api`;
+//const apiBaseURL = 'http://localhost:5000/api'
 const apiRegister = `${apiBaseURL}/auth/register`;
 const apiLogin = `${apiBaseURL}/auth/login`;
 
@@ -28,17 +29,20 @@ function Login (props) {
   },[loggedIn]);
 
   const addUserFunction = (userToAdd) => {
-    axios.post(apiRegister, {...userToAdd})
+    console.log(`API Call: ${apiRegister}`)
+    console.log(`User to Add: ${userToAdd.username}`);
+    axios.post(apiRegister, { username: userToAdd.username, password: userToAdd.password, email: userToAdd.email, role: userToAdd.role})
       .then(response=>{
         console.log(response);
       })
-      .catch(err=>console.log(err));
+      .catch(err=>console.log(err.message));
   };
 
   const processLoginFunction = (userDetails) => {
+    console.log(userDetails);
     axios.post(apiLogin, { username: userDetails.username, password: userDetails.password})
-      .then(response=>{
-        //console.log('login.processLoginFunction:Response.data:',response.data);
+      .then((response, request)=>{
+        console.log('login.processLoginFunction:Response.headers',response.headers);
         document.cookie = `isLoggedIn=true; path=/`;
         document.cookie = `authToken=${response.data.authToken}; path=/`;
         document.cookie = `username=${response.data.username}; path=/`;
@@ -48,8 +52,10 @@ function Login (props) {
         setUserId(response.data.userId);
         setLoggedIn(true);
       })
-      .catch(err=>console.log(err));
-  };
+      .catch(function (error) {
+          console.log(error.toJSON());
+  });
+}
 
   if (loggedIn) {
     return <HomePage loggedIn={loggedIn} username={username} token={token} userId={userId} />

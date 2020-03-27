@@ -4,8 +4,7 @@ import axios from 'axios'
 import cookies from 'next-cookies'
 import { withAuthSync } from '../utils/auth'
 
-const apiProtocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
-const apiBaseURL = `${apiProtocol}://localhost:5000/api`;
+const apiBaseURL = `https://cors-anywhere.herokuapp.com/https://authentication-backend-lambda.herokuapp.com/api`;
 const apiRegister = `${apiBaseURL}/auth/register`;
 const apiUser = `${apiBaseURL}/users/diners/`;
 

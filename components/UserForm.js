@@ -108,7 +108,7 @@ const FormikUserForm = withFormik({
     return {
       username: props.username || "",
       email: props.email || "",
-      role: props.role || '',
+      role: props.role || roles[0],
       password: "",
       id: props.id || undefined
     };
