@@ -4,8 +4,9 @@ import axios from 'axios'
 import cookies from 'next-cookies'
 import { withAuthSync } from '../utils/auth'
 
-const apiBaseURL = `https://cors-anywhere.herokuapp.com/https://authentication-backend-lambda.herokuapp.com/api`;
-const apiRegister = `${apiBaseURL}/auth/register`;
+//const apiBaseURL = `https://cors-anywhere.herokuapp.com/https://authentication-backend-lambda.herokuapp.com/api`;
+const apiBaseURL = `https://authentication-backend-lambda.herokuapp.com/api`;
+//const apiBaseURL = 'http://localhost:5000/api';
 const apiUser = `${apiBaseURL}/users/diners/`;
 
 const Profile = props => {

@@ -31,29 +31,67 @@ function Login (props) {
   const addUserFunction = (userToAdd) => {
     console.log(`API Call: ${apiRegister}`)
     console.log(`User to Add: ${userToAdd.username}`);
-    axios.post(apiRegister, { username: userToAdd.username, password: userToAdd.password, email: userToAdd.email, role: userToAdd.role})
+    axios.post(apiRegister, { username: userToAdd.username, password: userToAdd.password, email: userToAdd.email, role: userToAdd.role},{withCredentials:true})
       .then(response=>{
         console.log(response);
       })
-      .catch(err=>console.log(err.message));
-  };
+      .catch(function (error) {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message);
+    }
+    console.log(error.config);
+  })
+};
 
   const processLoginFunction = (userDetails) => {
     console.log(userDetails);
     axios.post(apiLogin, { username: userDetails.username, password: userDetails.password})
       .then((response, request)=>{
-        console.log('login.processLoginFunction:Response.headers',response.headers);
+        console.log(response.data);
+        console.log(response.status);
+        console.log(response.statusText);
+        console.log(response.headers);
+        console.log(response.config);
+        console.log('login.processLoginFunction:Response',response);
         document.cookie = `isLoggedIn=true; path=/`;
-        document.cookie = `authToken=${response.cookies.authToken}; path=/`;
+        document.cookie = `authToken=${response.data.authToken}; path=/`;
         document.cookie = `username=${userDetails.username}; path=/`;
         setUsername(`${userDetails.username}`);
-        setToken(response.cookies.authToken);
+        setToken(response.data.authToken);
+        console.log(response.data.authToken);
         //setUserId(response.cookies.authToken.payload.id);
         setLoggedIn(true);
       })
       .catch(function (error) {
-          console.log(error.toJSON());
-  });
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+          console.log(error.config);
+        });
 }
 
   if (loggedIn) {
