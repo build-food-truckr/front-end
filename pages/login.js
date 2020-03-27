@@ -1,16 +1,26 @@
 import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import Router from 'next/router';
 import dynamic from "next/dynamic";
 const HomePage = dynamic(() => import("./index"));
-import Head from 'next/head'
+import Head from 'next/head';
 import bcrypt from 'bcryptjs';
+import cookies from 'next-cookies';
 import UserForm from '../components/UserForm.js';
 import LoginForm from '../components/LoginForm.js';
 
+//const apiBaseURL = `https://cors-anywhere.herokuapp.com/https://authentication-backend-lambda.herokuapp.com/api`;
+const apiBaseURL = `https://authentication-backend-lambda.herokuapp.com/api`;
+//const apiBaseURL = 'http://localhost:5000/api'
+const apiRegister = `${apiBaseURL}/auth/register`;
+const apiLogin = `${apiBaseURL}/auth/login`;
 
 function Login (props) {
   const [loginForm, setLoginForm] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+  const [token, setToken] = useState({});
+  const [userId, setUserId] = useState(undefined);
 
   useEffect(()=>{
     if (loggedIn) {
@@ -19,22 +29,35 @@ function Login (props) {
   },[loggedIn]);
 
   const addUserFunction = (userToAdd) => {
-    console.log(`Add User: ${userToAdd.email} --> need hook`);
+    console.log(`API Call: ${apiRegister}`)
+    console.log(`User to Add: ${userToAdd.username}`);
+    axios.post(apiRegister, { username: userToAdd.username, password: userToAdd.password, email: userToAdd.email, role: userToAdd.role})
+      .then(response=>{
+        console.log(response);
+      })
+      .catch(err=>console.log(err.message));
   };
 
   const processLoginFunction = (userDetails) => {
-    // Load hash from your password DB.
-    let hash = '$2a$10$jGONMK1/ZWyzILpEgumLHutAQ9nhyHORWQ73Mmb9Hq.VaXEHsgngi';
-    if (bcrypt.compareSync(userDetails.password, hash)) {
-      console.log(`Logged in: ${userDetails.username}`);
-      setLoggedIn(true);
-    } else {
-      console.log('Login failed.')
-    }
-  };
+    console.log(userDetails);
+    axios.post(apiLogin, { username: userDetails.username, password: userDetails.password})
+      .then((response, request)=>{
+        console.log('login.processLoginFunction:Response.headers',response.headers);
+        document.cookie = `isLoggedIn=true; path=/`;
+        document.cookie = `authToken=${response.cookies.authToken}; path=/`;
+        document.cookie = `username=${userDetails.username}; path=/`;
+        setUsername(`${userDetails.username}`);
+        setToken(response.cookies.authToken);
+        //setUserId(response.cookies.authToken.payload.id);
+        setLoggedIn(true);
+      })
+      .catch(function (error) {
+          console.log(error.toJSON());
+  });
+}
 
   if (loggedIn) {
-    return <HomePage />
+    return <HomePage loggedIn={loggedIn} username={username} token={token} userId={userId} />
   }
 
   return (

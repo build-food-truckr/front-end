@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import bcrypt from 'bcryptjs';
 
-const roles = ['Foodie','Food Truck Operator'];
+const roles = ['diner','operator'];
 const minPasswordLength = 8;
 
 function UserForm(props) {
@@ -14,7 +13,6 @@ function UserForm(props) {
       props.setFieldValue('username',props.username);
       props.setFieldValue('email',props.email);
       props.setFieldValue('password',props.password);
-      props.setFieldValue('tos',props.tos);
       props.setFieldValue('id',props.id);
     }
   },[props.isEditing]);
@@ -33,8 +31,6 @@ function UserForm(props) {
           {roles.map(r=><option value={r} key={r}>{r}</option>)}
         </Field><br />
         {props.errors.role?<p className="error">{props.errors.role}</p>:<></>}
-        <label htmlFor="tos" className="check">Do you agree to the Terms of Service? </label><Field type="checkbox" name="tos" /><br />
-        {props.errors.tos?<p className="error">{props.errors.tos}</p>:<></>}
         <Field type="hidden" name="id" />
         <button className="btn btn-s" disabled={!props.isValid}>Submit</button>
         <style jsx>{`
@@ -112,9 +108,8 @@ const FormikUserForm = withFormik({
     return {
       username: props.username || "",
       email: props.email || "",
-      role: props.role || '',
+      role: props.role || roles[0],
       password: "",
-      tos: props.tos || false,
       id: props.id || undefined
     };
   },
@@ -130,23 +125,13 @@ const FormikUserForm = withFormik({
       .oneOf(roles, 'Please select a role'),
     password: Yup.string()
       .min(minPasswordLength, `Password must be at least ${minPasswordLength} characters long`)
-      .required("Password is required"),
-    tos: Yup.boolean()
-      .required('Must Accept Terms and Conditions')
-      .oneOf([true], 'Must Accept Terms and Conditions')
+      .required("Password is required")
   }),
   //======END VALIDATION SCHEMA==========
 
   handleSubmit(values, formikBag) {
-    const hash = bcrypt.hashSync(values.password, 10);
-    values.password = hash;
     console.log(values);
-    let userToSave = values;
-    // I don't think I need this: (MST)
-    //if (formikBag.props.isEditing) {
-    //  userToSave = {...values, id: formikBag.props.id};
-    //}
-    formikBag.props.addUserFunction(userToSave);
+    formikBag.props.addUserFunction(values);
 
     formikBag.setStatus("Form Submitting!");
     formikBag.resetForm();
