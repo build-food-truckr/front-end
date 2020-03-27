@@ -1,7 +1,10 @@
 {
-  "name": "karaoke-findr",
+  "name": "food-truckr",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "12.16.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
